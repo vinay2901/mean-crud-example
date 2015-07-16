@@ -1,0 +1,47 @@
+var LocalStrategy = require('passport-local').Strategy;
+var mongoose      = require('mongoose');
+var User 		  = require('../models/model').User;
+var bCrypt 		  = require('bcrypt-nodejs');
+
+module.exports = function (passport) {
+	passport.use('signup',new LocalStrategy({
+		            passReqToCallback : true // allows us to pass back the entire request to the callback
+	},function(req,username,password,done){
+		
+		findOrCreateUser = function () {
+			console.log('in find or create');
+			console.log(User.findOne);
+			User.findOne({'username':username},function(err,doc){
+				console.log('in the success');	
+				if(err)
+					done(err);
+				else{
+					if(doc)
+					 	return 	done(null,false,req.flash('message','Username already exists'));
+					
+					var newUser = new User();
+						 newUser.username = req.body.username;
+						 newUser.password = createHash(req.body.password);
+						 newUser.email		= req.body.email;
+						 
+						     newUser.save(function(err) {
+                            if (err){
+                                console.log('Error in Saving user: '+err);  
+                                throw err;  
+                            }
+                            console.log('User Registration succesful');    
+                            return done(null, newUser);
+                        });
+					
+					
+				}
+			})
+		}
+	   findOrCreateUser();
+	}));
+	
+	var createHash = function(password){
+        return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
+    }
+}
+

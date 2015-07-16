@@ -1,0 +1,103 @@
+var express = require('express');
+var router = express.Router();
+var card   = require('../controllers/card');
+var list   = require('../controllers/list');
+
+
+module.exports = function(passport){
+
+var isAuthenticated = function (req, res, next) {
+	// if user is authenticated in the session, call the next() to call the next request handler 
+	// Passport adds this method to request object. A middleware is allowed to add properties to
+	// request and response objects
+	console.log(req.isAuthenticated());
+	if (req.isAuthenticated())
+		return next();
+	else
+		return next();
+	// if the user is not authenticated then redirect him to the login page
+	//res.redirect('/');
+}
+	/* GET login page. */
+	
+	router.get('/',isAuthenticated, function(req, res) {
+    	// Display the Login page with any flash message, if any
+    	console.log(req.user);
+		res.render('index', { user:req.user });
+	});
+
+	/* Handle Login POST */
+	router.post('/login', passport.authenticate('login', {		
+		failureFlash : true  
+	}),function(req,res){
+		console.log('in login success');
+		 if(req.user){
+		 	res.send({user:req.user})
+		 }
+	});
+	
+	router.post('/loggedin',function(req,res){
+		if(req.isAuthenticated())
+		return res.send({user:req.user});
+		else{ 		
+		return res.send({});	
+		}
+		
+	});
+
+	/* GET Registration Page */
+	router.get('/signup', function(req, res){
+		return res.send({user:req.user});
+	});
+
+	/* Handle Registration POST */	
+	router.post('/signup',passport.authenticate('signup', {		
+		failureFlash : true  
+	}),function(req,res){
+		console.log(req.user);
+		return res.send({ user : req.user});
+	}); 
+	
+	
+
+	/* GET Home Page */
+	router.get('/home', isAuthenticated, function(req, res){
+		res.render('home', { user: req.user });
+	});
+
+	/* Handle Logout */
+	router.get('/signout', function(req, res) {
+		req.logout();
+		res.redirect('/');
+	});
+	
+	
+	router.route('/card')
+		  .post(isAuthenticated,card.create);
+		  //.get(isAuthenticated,card.read)
+		/*  .update(isAuthenticated,card.update)
+		  .delete(isAuthenticated,card.delete); */
+		  
+
+	router.route('/list')
+		  .post(isAuthenticated,list.create)
+		  .get(isAuthenticated,list.read);
+		  
+		  
+		  /*.update(req.isAuthenticated,list.update)
+		  .delete(req.isAuthenticated,list.delete);*/
+	/*******************		  
+	router.route('/comment')
+		  .post(req.isAuthenticated,comment.create)
+		  .get(req.isAuthenticated,comment.get)
+		  .update(req.isAuthenticated,comment.update)
+		  .delete(req.isAuthenticated,comment.delete);
+		 
+	*********************/
+	return router;
+}
+
+
+
+
+

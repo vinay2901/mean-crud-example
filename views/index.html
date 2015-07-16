@@ -1,0 +1,25 @@
+<html >
+ <head>
+  <title></title>  
+  <meta name="viewport" content="width=device-width, initial-scale=1" />	
+  
+
+
+ </head>
+ <body>
+  <div ng-app="node_sample" ng-controller="root_controller">
+  <div ng-if="loggedin">
+    <p>Welcome {{user.username}}</p>
+  	<button ng-click="logout();" >signout</button>	
+  </div>  
+  
+  <br/>
+  
+   <div ui-view></div>
+   
+   </div>
+  <script src="bower_components/angular/angular.js"></script>    
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>  
+    <script src="/javascripts/app.js" ></script>      
+ </body>
+</html>

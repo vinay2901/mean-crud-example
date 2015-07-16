@@ -1,0 +1,12 @@
+<div ng-init="verify()">
+
+  <div ng-if="error" style="color:red;">{{error.error}}</div>
+  <div ng-if="success">
+  	Hi, Your email was verifid success fully .
+	
+	Please click below link to login 
+	  <a href="#" ui-sref="login">login</a>
+  </div>
+  
+	
+</div>

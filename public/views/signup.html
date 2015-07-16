@@ -1,0 +1,20 @@
+<div>
+	<div ng-if="error" id="error" style="color:red;">{{error.error}}</div>
+<br />
+
+
+<button ng-click="gotoLogin();" >Login</button>
+<h2>Sign Up</h2>
+
+    Email:<br />
+    <input type="text" ng-model="user.email" /><br />
+	
+	Username:<br/>
+	<input type="text" ng-model="user.username"/><br/>
+	
+    Password:<br />	
+    <input type="password" ng-model="user.password" /><br />
+	
+    <input type="button" value="Submit" ng-click="signup();" />
+
+</div>

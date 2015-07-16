@@ -1,0 +1,15 @@
+<div>
+  <div ng-if="error" style="color:red;">{{error.error}}</div>	
+	
+	Name: <input type="text"  ng-model="project.name" /><br/>
+	<br/>
+	Descripton:<textarea ng-model="project.description"></textarea> <br/>
+	<br/>
+	start-date:<input type="date" ng-model="project.startDate" /><br/>
+	<br/>
+	Due-date:<input type="date" ng-model="project.dueDate" /><br/>
+	<br/>
+	
+	<input type="button" value="submit" ng-click="createProject()" />
+	
+</div>

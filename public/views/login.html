@@ -1,0 +1,11 @@
+<div ng-if="error" style="color:red;">{{error.error || 'Bad request'}}</div>
+<br />
+ <button ng-click="gotoSignup();">Signup</button>
+<h2>Login</h2>
+
+    Username:<br />
+	
+    <input type="text" ng-model="user.username" /><br />
+    Name:<br />   
+    <input type="password" ng-model="user.password"  /><br />
+    <input type="button" value="Submit" ng-click="signin();" />

@@ -1,0 +1,30 @@
+
+<div ng-init="getProjects()">
+<br/>
+    <button ng-click="gotoNewProject();">Add New project</button>    
+	<br/>
+<br/>
+
+<table border="1" width="400px" >
+
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Start date</th>
+        <th>Due date</th>
+        <th>Action</th>
+    </tr>
+    <tr ng-repeat="project in projects">
+        <td>{{project.name}} {{$index+1}} </td>
+        <td>{{project.description}}</td>
+        <td>{{project.startDate | date:'dd-MM-yyyy'}}</td>
+        <td>{{project.dueDate | date:'dd-MM-yyyy'}}</td>
+        <td><a href="#" ui-sref="edit_project({project:project._id})">Edit</a> <br/>
+		<button ng-click="remove($index,project._id)">Delete</button></td>
+    </tr>
+   
+   
+    
+</table>
+
+</div>
